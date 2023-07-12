@@ -1,0 +1,11 @@
+SELECT 
+EXTRACT(MONTH FROM a1.event_date) as month,
+COUNT(distinct a1.user_id)
+FROM user_actions a1
+JOIN user_actions a2 
+ON EXTRACT(MONTH FROM a1.event_date - INTERVAL '1 month') = EXTRACT(MONTH FROM a2.event_date)
+AND EXTRACT(YEAR FROM a1.event_date) = EXTRACT(YEAR FROM a2.event_date)
+AND a1.user_id = a2.user_id
+WHERE TO_CHAR(a1.event_date, 'yyyy-mm') = '2022-07'
+GROUP BY 1
+;
